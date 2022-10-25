@@ -64,21 +64,21 @@ const SignUpForm = () => {
                 }} />
                 <FormInput label = 'Email' inputOptions={{ 
                     required: true, 
-                    type: 'text', 
+                    type: 'email', 
                     onChange: handleChange, 
                     name: 'email', 
                     value: email 
                 }} />
                 <FormInput label = 'Password' inputOptions={{ 
                     required: true, 
-                    type: 'text', 
+                    type: 'password', 
                     onChange: handleChange, 
                     name: 'password', 
                     value: password 
                 }} />
                 <FormInput label = 'Confirm Password' inputOptions={{ 
                     required: true, 
-                    type: 'text', 
+                    type: 'password', 
                     onChange: handleChange, 
                     name: 'confirmPassword', 
                     value: confirmPassword

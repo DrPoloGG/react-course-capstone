@@ -1,16 +1,18 @@
 
-import { signInWithGooglePopup, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
-
-import Button from "../button/button.component";
+import SignInForm from "../sign-in-form/sign-in-form.component";
 import SignUpForm from "../sign-up-form/sign-up-form.component";
 
-const SignIn = () => {
+import './authentication.styles.scss';
+
+const Authentication = () => {
     
+    /* 
     const logGoogleUser = async () => {
         const { user } = await signInWithGooglePopup();
         const userDocRef = await createUserDocumentFromAuth(user);
         console.log(user);
-    }
+    } 
+    */
 
     // The redirect causes the whole app to unmount and remount anew after the Google sign-in.
     // This funcion is not doing anything once the app remounts.
@@ -22,13 +24,11 @@ const SignIn = () => {
     } */
 
     return(
-        <div>
-            <h1>Sign In Page</h1>
-            <Button onClick={ logGoogleUser }>Sign in with Google Popup</Button>
-
-            <SignUpForm />
+        <div className="authentication-container">
+                <SignInForm />
+                <SignUpForm />
         </div>
     );
 };
 
-export default SignIn;
+export default Authentication;
