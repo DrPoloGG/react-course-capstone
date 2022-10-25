@@ -4,6 +4,7 @@ import { createUserDocumentFromAuth, signInUserWithEmailAndPassword, signInWithG
 import Button from "../button/button.component"
 import FormInput from "../form-input/form-input.component"
 
+
 import './sign-in-form.styles.scss';
 
 const defaultFormFields = {
@@ -12,9 +13,7 @@ const defaultFormFields = {
 }
 
 const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(user);
-    console.log(user);
+    await signInWithGooglePopup();
 }
 
 
@@ -36,10 +35,9 @@ const SignInForm = () => {
 
         try {
             const { user } = await signInUserWithEmailAndPassword(email, password);
+            
             resetFormFields();
         } catch (error) {
-            console.log(error.code);
-            console.log(error.message);
             switch (error.code) {
                 case 'auth/user-not-found':
                     alert('The account does not exist.');    
@@ -48,8 +46,7 @@ const SignInForm = () => {
                     alert('Password is incorrect.');
                     break;
                 default:
-                    alert('There was an error signing in:', error.message);
-                    console.log(error);      
+                    alert('There was an error signing in:', error.message);   
             }
        
         }
