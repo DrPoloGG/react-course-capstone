@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 import { CartProvider } from './contexts/cart.context';
-import { ProductsProvider } from './contexts/products.context';
+import { CategoriesProvider } from './contexts/categories.context';
 import { UserProvider } from './contexts/user.context';
 
 import './index.scss';
@@ -14,11 +14,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <ProductsProvider> {/* ProductsProvider can look upward to fetch data from UserProvider, but not the other way around */}
+        <CategoriesProvider> {/* ProductsProvider can look upward to fetch data from UserProvider, but not the other way around */}
           <CartProvider> {/* CartProvider can look upward to fetch data from UserProvider and ProductsProvider, but not the other way around */}
             <App />
           </CartProvider>
-        </ProductsProvider>
+        </CategoriesProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>

@@ -10,7 +10,7 @@ import {
     signOut,
     onAuthStateChanged
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'; 
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore'; 
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -91,3 +91,46 @@ export const signInUserWithEmailAndPassword = async (email, password) => {
 export const signOutUser = async () => signOut(auth);
 
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+
+/*
+# Data handling in collections on the Firestore DB
+#
+#
+#
+*/
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    // Create the collection reference inside "db" database with a name "collectionKey"
+    const collectionRef = collection(db, collectionKey);
+
+    // Instantiate a batch operation, like a reference to the batch that will execute as a whole transaction
+    const batch = writeBatch(db);
+
+    // For loop for objects inside "objectToAdd"
+    objectsToAdd.forEach((object) => {
+        // Create a document reference for each object, first argument is the collection reference, second argument
+        // is the name or title of the object (and document)
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        // Add the set to the batch "list of tasks" to execute
+        batch.set(docRef, object);
+    });
+
+    // Run the batch asynchronously, waiting for the result to be returned
+    await batch.commit();
+    console.log('Done!')
+}
+
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, 'categories');
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { title, items } = docSnapshot.data();
+        acc[title.toLowerCase()] = items;
+        return acc;
+    }, {});
+
+    return categoryMap;
+
+}
